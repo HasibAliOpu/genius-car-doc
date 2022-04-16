@@ -1,0 +1,8 @@
+.service {
+  border: 1px solid royalblue;
+  border-radius: 10px;
+}
+.service img {
+  border-radius: 10px;
+  padding: 3px;
+}
