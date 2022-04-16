@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const ServiceDetail = () => {
   const [service, setService] = useState([]);
@@ -13,7 +13,11 @@ const ServiceDetail = () => {
   return (
     <div>
       <h3>Service Details {params.serviceId}</h3>
-      {/* {service.find((sv) => sv.id === params.serviceId)} */}
+      <div className="text-center">
+        <Link to="/checkout">
+          <button className="btn btn-primary">Proceed Checkout</button>
+        </Link>
+      </div>
     </div>
   );
 };

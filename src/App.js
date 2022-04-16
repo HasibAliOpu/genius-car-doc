@@ -9,6 +9,8 @@ import ServiceDetail from "./Pages/Home/ServiceDetail/ServiceDetail";
 import Login from "./Pages/Login/Login/Login";
 import Register from "./Pages/Login/Register/Register";
 import NotFound from "./Pages/NotFound/NotFound";
+import CheckOut from "./Pages/Home/CheckOut/checkOut";
+import RequireAuth from "./Pages/Login/RequireAuth/RequireAuth";
 function App() {
   return (
     <div className="App">
@@ -20,6 +22,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route
+          path="/checkout"
+          element={
+            <RequireAuth>
+              <CheckOut />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
