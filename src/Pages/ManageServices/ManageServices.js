@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { toast } from "react-toastify";
-import useServices from "../../Hooks/useServices/useServices";
+import useServices from "../../Hooks/useServices";
 
 const ManageServices = () => {
   const [services, setServices] = useServices();

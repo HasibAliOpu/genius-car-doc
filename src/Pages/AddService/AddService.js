@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 const AddService = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = async (info) => {
+  const onSubmit = async (info, event) => {
     const url = `http://localhost:5000/service`;
     try {
       const { data } = await axios.post(url, info);
@@ -15,6 +15,7 @@ const AddService = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    event.target.reset();
   };
   return (
     <div className="w-50 mx-auto">
