@@ -18,13 +18,23 @@ const Header = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="home#home">Home</Nav.Link>
-              <Nav.Link href="home#services">Our Services</Nav.Link>
-              <Nav.Link href="home#experts">Our Experts</Nav.Link>
+              <Nav.Link href="home#services">Services</Nav.Link>
+              <Nav.Link href="home#experts">Experts</Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link as={Link} to="/about">
                 About
               </Nav.Link>
+              {user && (
+                <>
+                  <Nav.Link as={Link} to="/add">
+                    Add
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/manage">
+                    Manage
+                  </Nav.Link>
+                </>
+              )}
               {user ? (
                 <Nav.Link as={Link} to="" onClick={() => signOut(auth)}>
                   Log Out
