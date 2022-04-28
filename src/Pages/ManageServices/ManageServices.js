@@ -1,22 +1,21 @@
+import axios from "axios";
 import React from "react";
+import { toast } from "react-toastify";
 import useServices from "../../Hooks/useServices/useServices";
 
 const ManageServices = () => {
   const [services, setServices] = useServices();
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const proceed = window.confirm("Are You Sure??");
     if (proceed) {
       const url = `http://localhost:5000/service/${id}`;
-      fetch(url, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          const remaining = services.filter((service) => service._id !== id);
-          setServices(remaining);
-        });
+      const { data } = await axios.delete(url);
+
+      if (!data.success) return toast.error(data.error);
+      const remaining = services.filter((service) => service._id !== id);
+      setServices(remaining);
+      toast(data.message);
     }
   };
   return (

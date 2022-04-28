@@ -1,22 +1,20 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
 const AddService = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (info) => {
     const url = `http://localhost:5000/service`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
-
-    console.log(data);
+    try {
+      const { data } = await axios.post(url, info);
+      if (!data.success) {
+        return toast.error(data.error);
+      }
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   return (
     <div className="w-50 mx-auto">
