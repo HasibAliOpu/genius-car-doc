@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 const useServices = () => {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(`http://localhost:5000/service`);
-
-      setServices(data);
-    })();
+    fetch("http://localhost:5000/service")
+      .then((res) => res.json())
+      .then((data) => setServices(data));
   }, []);
   return [services, setServices];
 };

@@ -9,7 +9,7 @@ import ServiceDetail from "./Pages/Home/ServiceDetail/ServiceDetail";
 import Login from "./Pages/Login/Login/Login";
 import Register from "./Pages/Login/Register/Register";
 import NotFound from "./Pages/NotFound/NotFound";
-import CheckOut from "./Pages/Home/CheckOut/checkOut";
+import CheckOut from "./Pages/Home/CheckOut/CheckOut";
 import RequireAuth from "./Pages/Login/RequireAuth/RequireAuth";
 import AddService from "./Pages/AddService/AddService";
 import ManageServices from "./Pages/ManageServices/ManageServices";
@@ -26,7 +26,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
         <Route
-          path="/checkout"
+          path="/checkout/:checkoutId"
           element={
             <RequireAuth>
               <CheckOut />

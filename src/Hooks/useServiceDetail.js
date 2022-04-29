@@ -5,10 +5,9 @@ const useServiceDetail = (serviceId) => {
   const [service, setService] = useState([]);
 
   useEffect(() => {
+    const url = `http://localhost:5000/service/${serviceId}`;
     (async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/service/${serviceId}`
-      );
+      const { data } = await axios.get(url);
       setService(data);
     })();
   }, [serviceId]);
