@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import useServiceDetail from "../../../Hooks/useServiceDetail";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
+import axios from "axios";
+import { async } from "@firebase/util";
+import { toast } from "react-toastify";
 
 const CheckOut = () => {
   const { checkoutId } = useParams();
@@ -21,11 +24,28 @@ const CheckOut = () => {
   //   const newUser = { address: newAddress, ...rest };
   //   setUser(newUser);
   // };
+  const handlePlaceOrder = async (event) => {
+    event.preventDefault();
+    const order = {
+      email: user.email,
+      service: service.name,
+      id: checkoutId,
+      address: event.target.address.value,
+      phone: event.target.phoneNumber.value,
+    };
+    const url = `http://localhost:5000/order`;
+    const { data } = await axios.post(url, order);
+    if (!data.success) {
+      toast.error(data.error);
+    }
+    toast.success(data.message);
+    event.target.reset();
+  };
 
   return (
     <div>
       <h1 className="my-3">Your Order: {service?.name}</h1>
-      <form className="w-50 mx-auto">
+      <form onSubmit={handlePlaceOrder} className="w-50 mx-auto">
         <input
           className="w-100 mb-2 p-1"
           type="text"
@@ -34,6 +54,7 @@ const CheckOut = () => {
           value={user?.displayName}
           disabled
           required
+          readOnly
         />
         <input
           className="w-100 mb-2 p-1"
@@ -43,6 +64,7 @@ const CheckOut = () => {
           value={user?.email ? user?.email : "Email Not Found"}
           disabled
           required
+          readOnly
         />
         <input
           className="w-100 mb-2 p-1"
@@ -51,6 +73,7 @@ const CheckOut = () => {
           placeholder="Service"
           value={service.name}
           required
+          readOnly
         />
         <input
           className="w-100 mb-2 p-1"
@@ -68,7 +91,7 @@ const CheckOut = () => {
           required
         />
         <input
-          type="button"
+          type="submit"
           value="Place Order"
           className="btn btn-primary px-5"
         />
