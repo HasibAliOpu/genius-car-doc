@@ -8,9 +8,12 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/order?email=${user?.email}`
-      );
+      const url = `http://localhost:5000/order?email=${user?.email}`;
+      const { data } = await axios.get(url, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       setOrders(data);
     })();
   }, [user]);
