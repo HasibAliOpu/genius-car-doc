@@ -5,12 +5,15 @@ import {
 } from "react-firebase-hooks/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
+import useToken from "../../../Hooks/useToken";
 import Google from "../../../images/icon/google.png";
+import Loading from "../../Loading/Loading";
 const SocialLogin = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const [signInWithGithub, githubUser, githubLoading, githubError] =
     useSignInWithGithub(auth);
+  const [token] = useToken(googleUser || githubUser);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -25,8 +28,11 @@ const SocialLogin = () => {
       </div>
     );
   }
-  if (googleUser || githubUser) {
+  if (token) {
     navigate(from, { replace: true });
+  }
+  if (googleLoading || githubLoading) {
+    return <Loading />;
   }
   return (
     <div>

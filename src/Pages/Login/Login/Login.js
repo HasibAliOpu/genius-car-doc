@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./Login.css";
-import axios from "axios";
+import useToken from "../../../Hooks/useToken";
 
 const Login = () => {
   const location = useLocation();
@@ -24,16 +24,13 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending, error2] =
     useSendPasswordResetEmail(auth);
+  const [token] = useToken(user);
   const handleUserSignIn = async (event) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     await signInWithEmailAndPassword(email, password);
-    const { data } = await axios.post(
-      `https://evening-wildwood-15814.herokuapp.com/login`,
-      { email }
-    );
-    localStorage.setItem("accessToken", data);
+
     // navigate(from, { replace: true });
   };
   const handleResetPass = async () => {
@@ -48,7 +45,7 @@ const Login = () => {
   if (error || error2) {
     toast(`${error?.message} ${error2?.message}`);
   }
-  if (user) {
+  if (token) {
     navigate(from, { replace: true });
   }
   if (loading || sending) {
