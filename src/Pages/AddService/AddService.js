@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const AddService = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = async (info, event) => {
-    const url = `http://localhost:5000/service`;
+    const url = `https://evening-wildwood-15814.herokuapp.com/service`;
     try {
       const { data } = await axios.post(url, info);
       if (!data.success) {

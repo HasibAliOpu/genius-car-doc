@@ -33,7 +33,7 @@ const CheckOut = () => {
       address: event.target.address.value,
       phone: event.target.phoneNumber.value,
     };
-    const url = `http://localhost:5000/order`;
+    const url = `https://evening-wildwood-15814.herokuapp.com/order`;
     const { data } = await axios.post(url, order);
     if (!data.success) {
       toast.error(data.error);

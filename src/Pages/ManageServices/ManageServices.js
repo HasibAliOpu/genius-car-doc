@@ -9,7 +9,7 @@ const ManageServices = () => {
   const handleDelete = async (id) => {
     const proceed = window.confirm("Are You Sure??");
     if (proceed) {
-      const url = `http://localhost:5000/service/${id}`;
+      const url = `https://evening-wildwood-15814.herokuapp.com/service/${id}`;
       const { data } = await axios.delete(url);
 
       if (!data.success) return toast.error(data.error);

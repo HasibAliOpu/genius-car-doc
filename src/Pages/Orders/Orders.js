@@ -1,20 +1,27 @@
 import axios from "axios";
+import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import axiosPrivate from "../Api/axiosPrivate";
 
 const Orders = () => {
   const [user] = useAuthState(auth);
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const url = `http://localhost:5000/order?email=${user?.email}`;
-      const { data } = await axios.get(url, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      setOrders(data);
+      const url = `https://evening-wildwood-15814.herokuapp.com/order?email=${user?.email}`;
+      try {
+        const { data } = await axiosPrivate.get(url);
+        setOrders(data);
+      } catch (error) {
+        if (error.response.status === 401 || error.response.status === 403) {
+          signOut(auth);
+          navigate("/login");
+        }
+      }
     })();
   }, [user]);
   return (
