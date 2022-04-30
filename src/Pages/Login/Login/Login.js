@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./Login.css";
+import axios from "axios";
 
 const Login = () => {
   const location = useLocation();
@@ -23,11 +24,14 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending, error2] =
     useSendPasswordResetEmail(auth);
-  const handleUserSignIn = (event) => {
+  const handleUserSignIn = async (event) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    signInWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(email, password);
+    const { data } = await axios.post(`http://localhost:5000/login`, { email });
+    localStorage.setItem("accessToken", data);
+    navigate(from, { replace: true });
   };
   const handleResetPass = async () => {
     const email = emailRef.current.value;
@@ -42,7 +46,7 @@ const Login = () => {
     toast(`${error?.message} ${error2?.message}`);
   }
   if (user) {
-    navigate(from, { replace: true });
+    // navigate(from, { replace: true });
   }
   if (loading || sending) {
     return <Loading />;

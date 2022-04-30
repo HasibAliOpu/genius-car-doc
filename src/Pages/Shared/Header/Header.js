@@ -33,6 +33,9 @@ const Header = () => {
                   <Nav.Link as={Link} to="/manage">
                     Manage
                   </Nav.Link>
+                  <Nav.Link as={Link} to="/orders">
+                    Orders
+                  </Nav.Link>
                 </>
               )}
               {user ? (
@@ -43,6 +46,11 @@ const Header = () => {
                 <Nav.Link as={Link} to="/login">
                   Login
                 </Nav.Link>
+              )}
+              {user?.displayName ? (
+                <p className="mt-2 text-white">{user?.displayName}</p>
+              ) : (
+                ""
               )}
             </Nav>
           </Navbar.Collapse>
